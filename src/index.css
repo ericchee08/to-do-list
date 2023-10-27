@@ -1,0 +1,36 @@
+body {
+    background-image: url("/public/images/bg-desktop-dark.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.container { 
+    border: black solid 1px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 40rem;
+    height: 50rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+
+
+@media (max-width: 712px) {
+    body {
+        background-image: url("/public/images/bg-mobile-dark.jpg");
+    }
+    .container {
+        max-width: 85%;
+        margin-top: 2.8rem;
+    }
+}
+
+
