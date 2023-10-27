@@ -14,15 +14,15 @@
     font-size: large;
     font-family: 'Josefin Sans', sans-serif;
     border-color: transparent;
+    background-color: transparent;
     outline: none;
-    width: 75%;
+    width: 69%;
     height: 3.5rem;
-    margin:auto;
-
+    margin: auto;
 }
 
 .icon-cross {
     height: 1rem;
     width: 1rem;
-    margin: auto 1rem;
+    margin: auto 1.8rem;
 }

@@ -26,7 +26,7 @@ function App() {
         <div className="container" >
           <div className="header">
               <div className='title'>TODO</div>
-              <div className='theme-toggle' onClick={toggleTheme} ><img className="illustration-signup-desktop" src={theme === "light" ? iconMoon : iconSun} alt="" /></div>
+              <div className='theme-toggle' onClick={toggleTheme}><img className="illustration-signup-desktop" src={theme === "light" ? iconMoon : iconSun} alt="" /></div>
           </div>
           <TodoList></TodoList>
         </div>

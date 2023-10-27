@@ -1,5 +1,6 @@
 import React from 'react'
-import Todo from "../styles/Todo.css"
+import '../styles/Theme.css';
+import "../styles/Todo.css"
 import iconCheck from "../images/icon-check.svg"
 import iconCross from "../images/icon-cross.svg"
 

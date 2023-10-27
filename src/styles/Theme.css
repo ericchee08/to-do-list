@@ -1,14 +1,4 @@
-.header {
-    display: flex;
-    justify-content: space-between;
-}
 
-.title {
-    font-size: 3rem;
-    letter-spacing: 1rem;
-    color: white;
-    font-weight: 700;
-}
 
 #light {
     background-image: url("../images/bg-desktop-light.jpg");
@@ -16,4 +6,12 @@
 
 #dark {
     background-image: url("../images/bg-desktop-dark.jpg");
+}
+
+#dark .input-container {
+    background-color: hsl(235, 24%, 19%);
+}
+
+#dark .todo-input {
+    color:  hsl(233, 11%, 84%);
 }

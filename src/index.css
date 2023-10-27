@@ -15,7 +15,19 @@ body {
     border: black solid 1px;
     width: 40rem;
     height: 50rem;
-    margin: 4rem auto;
+    margin: 5rem auto;
     display: flex;
     flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 3rem;
+    letter-spacing: 1rem;
+    color: white;
+    font-weight: 400;
 }
