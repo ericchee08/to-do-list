@@ -1,0 +1,22 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 3rem;
+    letter-spacing: 1rem;
+    color: white;
+    font-weight: 700;
+
+}
+
+#light {
+    background-image: url("../images/bg-desktop-light.jpg");
+}
+
+#dark {
+    background-image: url("../images/bg-desktop-dark.jpg");
+}
+
+

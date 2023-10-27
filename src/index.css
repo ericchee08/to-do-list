@@ -1,34 +1,38 @@
 body {
-    background-image: url("/public/images/bg-desktop-dark.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    font-family: 'Josefin Sans', sans-serif;
     margin: 0;
     padding: 0;
 }
 
+.app {
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 35vh;
+    display: flex;
+}
+
 .container { 
     border: black solid 1px;
-    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     width: 40rem;
     height: 50rem;
-    margin: auto;
+    margin: 4rem auto;
     display: flex;
     flex-direction: column;
-    background-color: white;
+
 }
 
 @media (max-width: 712px) {
-    body {
-        background-image: url("/public/images/bg-mobile-dark.jpg");
+    #light, #dark {
+        background-repeat: no-repeat;
+        background-size: cover;
     }
+    
     .container {
         max-width: 85%;
         margin-top: 2.8rem;
     }
 }
-
-
