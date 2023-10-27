@@ -8,13 +8,12 @@ import iconSun from "./images/icon-sun.svg";
 export const ThemeContext = createContext(null);
 
 function App() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
+    localStorage.setItem("theme", theme);
     document.body.style.backgroundColor = theme === "dark" ? "hsl(235, 21%, 11%)" : "hsl(0, 0%, 98%)";
   }, [theme]);
-
-  
 
   const toggleTheme = () => {
     setTheme((curr) => (curr === "light" ? "dark" : "light"));
