@@ -1,4 +1,6 @@
 import './styles/Theme.css';
+import './styles/MobileTheme.css';
+import './styles/Mobile.css';
 import { createContext, useState, useEffect } from "react";
 import iconMoon from "./images/icon-moon.svg";
 import iconSun from "./images/icon-sun.svg";

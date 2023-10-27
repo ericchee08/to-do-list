@@ -7,32 +7,15 @@ body {
 .app {
     background-repeat: no-repeat;
     background-size: cover;
-    height: 35vh;
+    height: 30vh;
     display: flex;
 }
 
 .container { 
     border: black solid 1px;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     width: 40rem;
     height: 50rem;
     margin: 4rem auto;
     display: flex;
     flex-direction: column;
-
-}
-
-@media (max-width: 712px) {
-    #light, #dark {
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    
-    .container {
-        max-width: 85%;
-        margin-top: 2.8rem;
-    }
 }
