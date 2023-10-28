@@ -15,7 +15,7 @@
     border-color: transparent;
     background-color: transparent;
     outline: none;
-    width: 69%;
+    width: 77%;
     height: 3.5rem;
     margin: auto;
 }
@@ -26,7 +26,21 @@
     margin: auto 1.8rem;
 }
 
+.icon-check {
+    height: 1rem;
+    width: 1rem;
+    margin: auto 1.8rem;
+}
+
 .tasks-container {
     display: flex;
     border-radius: 0.3rem;
+}
+
+.task {
+    font-size: large;
+}
+
+form {
+    margin-bottom: 1rem;
 }

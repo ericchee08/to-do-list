@@ -30,12 +30,12 @@ const TodoList = () => {
             <div className="input-container"> 
                 <input className="todo-input" type="text" placeholder='Create a new todo...'/>
             </div>
-            <img className="icon-check" src={iconCheck} alt="" />
         </form>
 
       
         {tasks.map((task) => (
           <div className="tasks-container" key={task.id}>
+            <img className="icon-check" src={iconCheck} alt="" />
             <p className="task">{task.task}</p>
             <img className="icon-cross" src={iconCross} alt="" />
           </div>
