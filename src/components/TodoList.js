@@ -29,10 +29,18 @@ const TodoList = () => {
         <form action="">
             <div className="input-container"> 
                 <input className="todo-input" type="text" placeholder='Create a new todo...'/>
-                <img className="icon-cross" src={iconCross} alt="" />
             </div>
             <img className="icon-check" src={iconCheck} alt="" />
         </form>
+
+      
+        {tasks.map((task) => (
+          <div className="tasks-container" key={task.id}>
+            <p className="task">{task.task}</p>
+            <img className="icon-cross" src={iconCross} alt="" />
+          </div>
+        ))}
+      
     </div>
   )
 }
