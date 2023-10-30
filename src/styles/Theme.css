@@ -1,17 +1,37 @@
+/* APP CONTAINER */
 
-
-#light {
+#applight {
     background-image: url("../images/bg-desktop-light.jpg");
 }
 
-#dark {
+#appdark {
     background-image: url("../images/bg-desktop-dark.jpg");
 }
+
+/* TODO CONTAINER */
 
 #dark .input-container {
     background-color: hsl(235, 24%, 19%);
 }
 
+#light .input-container {
+    background-color: hsl(0, 0%, 98%)
+}
+
 #dark .todo-input {
     color:  hsl(233, 11%, 84%);
 }
+
+#light .todo-input {
+    color:  hsl(233, 11%, 84%);
+}
+
+#dark .tasks-container {
+    background-color: hsl(235, 24%, 19%);
+}
+
+#light .tasks-container {
+    background-color: hsl(0, 0%, 98%);
+}
+
+

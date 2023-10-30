@@ -1,5 +1,5 @@
 @media (max-width: 712px) {
-    #light, #dark {
+    #applight, #appdark {
         background-repeat: no-repeat;
         background-size: cover;
     }

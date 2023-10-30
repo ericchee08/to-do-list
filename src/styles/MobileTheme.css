@@ -1,9 +1,9 @@
 @media (max-width: 712px) {
-    #light  {
+    #applight  {
         background-image: url("../images/bg-mobile-light.jpg");
     }
 
-    #dark {
+    #appdark {
         background-image: url("../images/bg-mobile-dark.jpg");
     }
 }

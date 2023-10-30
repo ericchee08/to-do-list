@@ -1,19 +1,20 @@
 import './styles/Theme.css';
 import './styles/MobileTheme.css';
 import './styles/Mobile.css';
-import { createContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import iconMoon from "./images/icon-moon.svg";
 import iconSun from "./images/icon-sun.svg";
-import TodoList from './components/TodoList';
+import TodoList from './Components/TodoList';
+import { ThemeContext } from './Contexts/ThemeContext';
 
-export const ThemeContext = createContext(null);
+// export const ThemeContext = createContext(null);
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
-    document.body.style.backgroundColor = theme === "dark" ? "hsl(235, 21%, 11%)" : "hsl(0, 0%, 98%)";
+    document.body.style.backgroundColor = theme === "dark" ? "hsl(235, 21%, 11%)" : "hsl(236, 33%, 92%)";
   }, [theme]);
 
   const toggleTheme = () => {
@@ -22,7 +23,7 @@ function App() {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className="app" id={theme}>
+      <div className="app" id={`app${theme}`}>
         <div className="container" >
           <div className="header">
               <div className='title'>TODO</div>

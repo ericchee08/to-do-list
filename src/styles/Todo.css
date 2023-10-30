@@ -34,7 +34,7 @@
 
 .tasks-container {
     display: flex;
-    border-radius: 0.3rem;
+    border-radius: 1px 1px 1 1;
 }
 
 .task {
@@ -44,3 +44,7 @@
 form {
     margin-bottom: 1rem;
 }
+
+.first-task {
+    border-radius: 0.3rem 0.3rem 0px 0px;
+  }
