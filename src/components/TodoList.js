@@ -9,10 +9,11 @@ import { ThemeContext } from '../Contexts/ThemeContext';
 const TodoList = () => {
 
   const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState(''); 
   const {theme} = useContext(ThemeContext);
 
   useEffect(()=> {
-    const getTasks = async  () => {
+    const getTasks = async () => {
       const tasksFromServer = await fetchTasks();
       setTasks(tasksFromServer)
     }
@@ -26,11 +27,42 @@ const TodoList = () => {
     return data;
   };
 
+  //calls the POST endpoint
+  const addTask = async (newTask) => {
+    const res = await fetch("http://localhost:5000/tasks", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(newTask),
+    });
+
+    const data = await res.json();
+
+    setTasks([...tasks, data]);
+  };
+
+  //records the input change value 
+  const handleTaskInputChange = (event) => {
+    setNewTask(event.target.value);
+  };
+
+  //on submit pass the newTask variable set in handleTaskInputchange to addTask()
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (newTask.trim() === '') {
+      return; 
+    }
+    const newTaskObject = { task: newTask };
+    addTask(newTaskObject);
+    setNewTask(''); 
+  };
+
   return (
     <div className='todo-container' id={theme}>
-        <form action="">
+        <form onSubmit={handleSubmit}>
             <div className="input-container"> 
-                <input className="todo-input" type="text" placeholder='Create a new todo...'/>
+                <input className="todo-input" type="text" placeholder='Create a new todo...' value={newTask} onChange={handleTaskInputChange}/>
             </div>
         </form>
 
