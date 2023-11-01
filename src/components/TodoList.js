@@ -5,6 +5,7 @@ import iconCheck from "../images/icon-check.svg"
 import iconCross from "../images/icon-cross.svg"
 import { useState, useEffect, useContext } from 'react';
 import { ThemeContext } from '../Contexts/ThemeContext';
+import { DragDropContext, Draggable, Droppable} from '@hello-pangea/dnd';
 
 const TodoList = () => {
 
@@ -70,23 +71,46 @@ const TodoList = () => {
     setNewTask(''); 
   };
 
+  function handleOnDragEnd(result) {
+    if (!result.destination) return;
+    const items = Array.from(tasks);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setTasks(items);
+  }
+  
   return (
-    <div className='todo-container' id={theme}>
-        <form onSubmit={handleSubmit}>
-            <div className="input-container"> 
+    <DragDropContext onDragEnd={handleOnDragEnd}>
+      <div className='todo-container' id={theme}>
+          <form onSubmit={handleSubmit}>
+              <div className="input-container"> 
                 <input className="todo-input" type="text" placeholder='Create a new todo...' value={newTask} onChange={handleTaskInputChange}/>
-            </div>
-        </form>
-
-        {tasks.map((task, index) => (
-          <div className={`tasks-container ${index === 0 ? 'first-task' : ''}`} key={task.id}>
-            <img className="icon-check" src={iconCheck} alt="" />
-            <p className="task">{task.task}</p>
-            <img className="icon-cross" src={iconCross} alt="" onClick={() => deleteTask(task.id)}/>
-          </div>
-        ))}
-      
-    </div>
+              </div>
+          </form>
+        <Droppable droppableId="tasks">
+          {(provided) => (
+            <ul {...provided.droppableProps} ref={provided.innerRef}>
+              {tasks.map((task, index) => {
+                return ( 
+                  <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                    {(provided) => (
+                      <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                        <div className={`tasks-container ${index === 0 ? 'first-task' : ''}`} key={task.id}>
+                          <img className="icon-check" src={iconCheck} alt="" />
+                          <p className="task">{task.task}</p>
+                          <img className="icon-cross" src={iconCross} alt="" onClick={() => deleteTask(task.id)}/>
+                        </div>
+                      </li>
+                    )}
+                  </Draggable>
+                )	
+              })}
+            </ul>
+          )}
+        </Droppable>
+        
+      </div>
+    </DragDropContext>
   )
 }
 
