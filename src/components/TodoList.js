@@ -89,23 +89,21 @@ const TodoList = () => {
           </form>
         <Droppable droppableId="tasks">
           {(provided) => (
-            <ul {...provided.droppableProps} ref={provided.innerRef}>
+            <div {...provided.droppableProps} ref={provided.innerRef}>
               {tasks.map((task, index) => {
                 return ( 
                   <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
                     {(provided) => (
-                      <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                        <div className={`tasks-container ${index === 0 ? 'first-task' : ''}`} key={task.id}>
+                        <div className={`tasks-container ${index === 0 ? 'first-task' : ''}`} key={task.id} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                           <img className="icon-check" src={iconCheck} alt="" />
                           <p className="task">{task.task}</p>
                           <img className="icon-cross" src={iconCross} alt="" onClick={() => deleteTask(task.id)}/>
                         </div>
-                      </li>
                     )}
                   </Draggable>
                 )	
               })}
-            </ul>
+            </div>
           )}
         </Droppable>
         
