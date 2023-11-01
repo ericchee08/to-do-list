@@ -77,6 +77,7 @@ const TodoList = () => {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setTasks(items);
+		console.log(items)
   }
   
   return (
@@ -89,7 +90,7 @@ const TodoList = () => {
           </form>
         <Droppable droppableId="tasks">
           {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
+            <div {...provided.droppableProps} ref={provided.innerRef} >
               {tasks.map((task, index) => {
                 return ( 
                   <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
@@ -103,6 +104,7 @@ const TodoList = () => {
                   </Draggable>
                 )	
               })}
+							{provided.placeholder}
             </div>
           )}
         </Droppable>
