@@ -27,6 +27,18 @@ const TodoList = () => {
     return data;
   };
 
+  const deleteTask = async (taskId) => {
+    const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+      method: 'DELETE',
+    });
+
+    if (res.status === 200) {
+      setTasks(tasks.filter((task) => task.id !== taskId));
+    } else {
+      console.error('Failed to delete the task');
+    }
+  };
+
   //calls the POST endpoint
   const addTask = async (newTask) => {
     const res = await fetch("http://localhost:5000/tasks", {
@@ -70,7 +82,7 @@ const TodoList = () => {
           <div className={`tasks-container ${index === 0 ? 'first-task' : ''}`} key={task.id}>
             <img className="icon-check" src={iconCheck} alt="" />
             <p className="task">{task.task}</p>
-            <img className="icon-cross" src={iconCross} alt="" />
+            <img className="icon-cross" src={iconCross} alt="" onClick={() => deleteTask(task.id)}/>
           </div>
         ))}
       
