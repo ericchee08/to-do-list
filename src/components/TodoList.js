@@ -8,7 +8,6 @@ import { ThemeContext } from '../Contexts/ThemeContext';
 import { DragDropContext, Draggable, Droppable} from '@hello-pangea/dnd';
 
 const TodoList = () => {
-
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState(''); 
   const {theme} = useContext(ThemeContext);
@@ -22,14 +21,14 @@ const TodoList = () => {
   },[])
 
   const fetchTasks = async () => {
-    const res = await fetch("http://localhost:5000/tasks");
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/getall`);
     const data = await res.json();
     console.log(data)
     return data;
   };
 
   const deleteTask = async (taskId) => {
-    const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/${taskId}`, {
       method: 'DELETE',
     });
 
@@ -42,7 +41,7 @@ const TodoList = () => {
 
   //calls the POST endpoint
   const addTask = async (newTask) => {
-    const res = await fetch("http://localhost:5000/tasks", {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
