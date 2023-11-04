@@ -23,7 +23,7 @@ const TodoList = () => {
   const fetchTasks = async () => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/getall`);
     const data = await res.json();
-    console.log(data)
+    // console.log(data)
     return data;
   };
 
@@ -114,7 +114,7 @@ const TodoList = () => {
               })}
 							{provided.placeholder}
                 <div className="task-footer-container">
-                  <div className="number-of-items">5 tasks left</div>
+                  <div className="number-of-items">{tasks.length} items left</div>
                   <div className="task-status">
                     <div className="all">All</div>
                     <div className="active">Active</div>
@@ -125,7 +125,6 @@ const TodoList = () => {
             </div>
           )}
         </Droppable>
-        
       </div>
     </DragDropContext>
   )

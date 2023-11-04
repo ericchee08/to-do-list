@@ -23,16 +23,19 @@
 }
 
 #light .todo-input {
-    color:  hsl(233, 11%, 84%);
+    color:  hsl(235, 19%, 35%)
 }
 
 #dark .tasks-container {
     background-color: hsl(235, 24%, 19%);
     color: hsl(234, 11%, 52%);
+    border-bottom: solid hsl(234, 11%, 52%) 1.5px;
 }
 
 #light .tasks-container {
     background-color: hsl(0, 0%, 98%);
+    color: hsl(234, 11%, 52%);
+    border-bottom: solid hsl(236, 33%, 92%) 1.5px;
 }
 
 #dark .task-footer-container{
@@ -40,12 +43,16 @@
     color: hsl(234, 11%, 52%);
 }
 
+#light .task-footer-container{
+    background-color: hsl(0, 0%, 98%);
+    color: hsl(234, 11%, 52%);
+}
+
+
 #dark .number-of-items:hover, 
 #dark .all:hover, 
 #dark .active:hover, 
 #dark .completed:hover, 
 #dark .clear-completed:hover     {
-    color: blue;
+    color: hsl(236, 33%, 92%)
 }
-
-
