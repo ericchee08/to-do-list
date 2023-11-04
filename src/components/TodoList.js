@@ -100,8 +100,12 @@ const TodoList = () => {
                   <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
                     {(provided) => (
                         <div className={`tasks-container ${index === 0 ? 'first-task' : ''}`} key={task.id} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                          <img className="icon-check" src={iconCheck} alt="" />
-                          <p className="task">{task.task}</p>
+                          <div className='task-and-check-container'>
+                              <div className="icon-check-border">
+                                <img className="icon-check" src={iconCheck} alt="" />
+                              </div>
+                              <p className="task">{task.task}</p>
+                          </div>
                           <img className="icon-cross" src={iconCross} alt="" onClick={() => deleteTask(task.id)}/>
                         </div>
                     )}
