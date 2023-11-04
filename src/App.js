@@ -7,8 +7,6 @@ import iconSun from "./images/icon-sun.svg";
 import TodoList from './Components/TodoList';
 import { ThemeContext } from './Contexts/ThemeContext';
 
-// export const ThemeContext = createContext(null);
-
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 

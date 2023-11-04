@@ -28,10 +28,24 @@
 
 #dark .tasks-container {
     background-color: hsl(235, 24%, 19%);
+    color: hsl(234, 11%, 52%);
 }
 
 #light .tasks-container {
     background-color: hsl(0, 0%, 98%);
+}
+
+#dark .task-footer-container{
+    background-color: hsl(235, 24%, 19%);
+    color: hsl(234, 11%, 52%);
+}
+
+#dark .number-of-items:hover, 
+#dark .all:hover, 
+#dark .active:hover, 
+#dark .completed:hover, 
+#dark .clear-completed:hover     {
+    color: blue;
 }
 
 

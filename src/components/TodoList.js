@@ -113,6 +113,15 @@ const TodoList = () => {
                 )	
               })}
 							{provided.placeholder}
+                <div className="task-footer-container">
+                  <div className="number-of-items">5 tasks left</div>
+                  <div className="task-status">
+                    <div className="all">All</div>
+                    <div className="active">Active</div>
+                    <div className="completed">Completed</div>
+                  </div>
+                  <div className="clear-completed">Clear Completed</div>
+                </div>
             </div>
           )}
         </Droppable>
