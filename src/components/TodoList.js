@@ -28,20 +28,26 @@ const TodoList = () => {
   };
 
   const deleteTask = async (taskId) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/${taskId}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/Task/${taskId}`, {
       method: 'DELETE',
     });
+    // const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/${taskId}`, {
+    //   method: 'DELETE',
+    // });
 
-    if (res.status === 200) {
-      setTasks(tasks.filter((task) => task.id !== taskId));
-    } else {
-      console.error('Failed to delete the task');
-    }
+    // if (res.status === 200) {
+    //   setTasks(tasks.filter((task) => task.id !== taskId));
+    // } else {
+    //   console.error('Failed to delete the task');
+    // }
+
+    const tasksFromServer = await fetchTasks();
+    setTasks(tasksFromServer);
   };
 
   //calls the POST endpoint
   const addTask = async (newTask) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/Task`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -49,9 +55,8 @@ const TodoList = () => {
       body: JSON.stringify(newTask),
     });
 
-    const data = await res.json();
-
-    setTasks([...tasks, data]);
+    const tasksFromServer = await fetchTasks();
+    setTasks(tasksFromServer);
   };
 
   //records the input change value 
@@ -76,7 +81,7 @@ const TodoList = () => {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setTasks(items);
-		console.log(items)
+    console.log(items)
   }
   
   return (
