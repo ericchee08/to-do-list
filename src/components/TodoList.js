@@ -29,12 +29,20 @@ const TodoList = () => {
 
   const deleteTask = async (taskId) => {
     await fetch(`${process.env.REACT_APP_API_URL}/Task/${taskId}`, {
-      method: 'DELETE',
+      method: 'DELETE'
     });
 
     const tasksFromServer = await fetchTasks();
     setTasks(tasksFromServer);
   };
+
+  const clearCompleted = async () => {
+    await fetch(`${process.env.REACT_APP_API_URL}/Task/ClearCompleted`,{
+    method: 'DELETE'
+  });
+    const tasksFromServer = await fetchTasks();
+    setTasks(tasksFromServer);
+  }
 
   const addTask = async (newTask) => {
     await fetch(`${process.env.REACT_APP_API_URL}/Task`, {
@@ -50,7 +58,7 @@ const TodoList = () => {
   };
 
   const setCheckStatus = async (status) => {
-    
+
   }
 
   //records the input change value 
@@ -114,7 +122,7 @@ const TodoList = () => {
                     <div className="active">Active</div>
                     <div className="completed">Completed</div>
                   </div>
-                  <div className="clear-completed">Clear Completed</div>
+                  <div className="clear-completed" onClick={() => clearCompleted()}>Clear Completed</div>
                 </div>
             </div>
           )}
