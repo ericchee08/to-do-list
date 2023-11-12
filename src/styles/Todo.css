@@ -32,7 +32,18 @@
     margin: auto;
 }
 
-.icon-check-border {
+.icon-check-inactive {
+    display: flex;
+    justify-content: center;
+    border: solid grey 1px;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    margin: auto 1.8rem;
+    background: white;
+}
+
+.icon-check-active {
     display: flex;
     justify-content: center;
     border: solid grey 1px;

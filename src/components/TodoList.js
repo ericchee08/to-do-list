@@ -31,21 +31,11 @@ const TodoList = () => {
     await fetch(`${process.env.REACT_APP_API_URL}/Task/${taskId}`, {
       method: 'DELETE',
     });
-    // const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/${taskId}`, {
-    //   method: 'DELETE',
-    // });
-
-    // if (res.status === 200) {
-    //   setTasks(tasks.filter((task) => task.id !== taskId));
-    // } else {
-    //   console.error('Failed to delete the task');
-    // }
 
     const tasksFromServer = await fetchTasks();
     setTasks(tasksFromServer);
   };
 
-  //calls the POST endpoint
   const addTask = async (newTask) => {
     await fetch(`${process.env.REACT_APP_API_URL}/Task`, {
       method: "POST",
@@ -59,6 +49,10 @@ const TodoList = () => {
     setTasks(tasksFromServer);
   };
 
+  const setCheckStatus = async (status) => {
+    
+  }
+
   //records the input change value 
   const handleTaskInputChange = (event) => {
     setNewTask(event.target.value);
@@ -70,7 +64,7 @@ const TodoList = () => {
     if (newTask.trim() === '') {
       return; 
     }
-    const newTaskObject = { task: newTask };
+    const newTaskObject = { task: newTask, active: 0 };
     addTask(newTaskObject);
     setNewTask(''); 
   };
@@ -83,7 +77,7 @@ const TodoList = () => {
     setTasks(items);
     console.log(items)
   }
-  
+
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <div className='todo-container' id={theme}>
@@ -101,7 +95,7 @@ const TodoList = () => {
                     {(provided) => (
                         <div className={`tasks-container ${index === 0 ? 'first-task' : ''}`} key={task.id} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                           <div className='task-and-check-container'>
-                              <div className="icon-check-border">
+                              <div className={task.active === 0 ? "icon-check-inactive" : "icon-check-active"} onClick={() => setCheckStatus()}>
                                 <img className="icon-check" src={iconCheck} alt="" />
                               </div>
                               <p className="task">{task.task}</p>
