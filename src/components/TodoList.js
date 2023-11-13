@@ -21,11 +21,17 @@ const TodoList = () => {
   },[])
 
   const fetchTasks = async () => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/getall`);
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/GetAll`);
     const data = await res.json();
     // console.log(data)
     return data;
   };
+
+  const fetchTask = async (taskId) => {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/GetSingle?taskId=${taskId}`)
+    const data = await res.json();
+    return data;
+  }
 
   const deleteTask = async (taskId) => {
     await fetch(`${process.env.REACT_APP_API_URL}/Task/${taskId}`, {
@@ -57,8 +63,25 @@ const TodoList = () => {
     setTasks(tasksFromServer);
   };
 
-  const setCheckStatus = async (status) => {
+  const updateTask = async (updateTask) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/Task`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updateTask),
+    });
+    const tasksFromServer = await fetchTasks();
+    setTasks(tasksFromServer);
+  }
+  
 
+  const setCheckStatus = async (taskId) => {
+    const taskToCheckStatus = await fetchTask(taskId);
+    const status = taskToCheckStatus.active === 0 ? 1 : 0;
+
+    const updTask = { ...taskToCheckStatus, active: status };
+    updateTask(updTask)
   }
 
   //records the input change value 
@@ -103,7 +126,7 @@ const TodoList = () => {
                     {(provided) => (
                         <div className={`tasks-container ${index === 0 ? 'first-task' : ''}`} key={task.id} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                           <div className='task-and-check-container'>
-                              <div className={task.active === 0 ? "icon-check-inactive" : "icon-check-active"} onClick={() => setCheckStatus()}>
+                              <div className={task.active === 0 ? "icon-check-inactive" : "icon-check-active"} onClick={() => setCheckStatus(task.id)}>
                                 <img className="icon-check" src={iconCheck} alt="" />
                               </div>
                               <p className="task">{task.task}</p>
