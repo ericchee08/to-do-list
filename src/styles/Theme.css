@@ -47,9 +47,7 @@
     background-color: hsl(0, 0%, 98%);
     color: hsl(234, 11%, 52%);
 }
-
-
-#dark .number-of-items:hover, 
+ 
 #dark .all:hover, 
 #dark .active:hover, 
 #dark .completed:hover, 

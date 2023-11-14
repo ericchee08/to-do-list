@@ -10,6 +10,8 @@ import { DragDropContext, Draggable, Droppable} from '@hello-pangea/dnd';
 const TodoList = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState(''); 
+  const [filter, setFilter] = useState(localStorage.getItem('todoFilter') || 'all');
+
   const {theme} = useContext(ThemeContext);
 
   useEffect(()=> {
@@ -19,6 +21,24 @@ const TodoList = () => {
     }
     getTasks();
   },[])
+
+  useEffect(() => {
+    localStorage.setItem('todoFilter', filter);
+  }, [filter]);
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'active') {
+      return task.active === 0;
+    } else if (filter === 'completed') {
+      return task.active === 1;
+    } else {
+      return true;
+    }
+  });
+
+  const handleFilterClick = (selectedFilter) => {
+    setFilter(selectedFilter);
+  };
 
   const fetchTasks = async () => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/GetAll`);
@@ -75,7 +95,6 @@ const TodoList = () => {
     setTasks(tasksFromServer);
   }
   
-
   const setCheckStatus = async (taskId) => {
     const taskToCheckStatus = await fetchTask(taskId);
     const status = taskToCheckStatus.active === 0 ? 1 : 0;
@@ -109,6 +128,12 @@ const TodoList = () => {
     console.log(items)
   }
 
+  function numberOfItemsLeft(tasks) {
+    const inactiveTasks = tasks.filter(task => task.active === 0);
+    const numberOfInactiveTasks = inactiveTasks.length;
+    return numberOfInactiveTasks
+  }
+  
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <div className='todo-container' id={theme}>
@@ -120,7 +145,7 @@ const TodoList = () => {
         <Droppable droppableId="tasks">
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef} >
-              {tasks.map((task, index) => {
+              {filteredTasks.map((task, index) => {
                 return ( 
                   <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
                     {(provided) => (
@@ -139,11 +164,17 @@ const TodoList = () => {
               })}
 							{provided.placeholder}
                 <div className="task-footer-container">
-                  <div className="number-of-items">{tasks.length} items left</div>
+                  <div className="number-of-items">{numberOfItemsLeft(tasks)} items left</div>
                   <div className="task-status">
-                    <div className="all">All</div>
-                    <div className="active">Active</div>
-                    <div className="completed">Completed</div>
+                    <div className="all" onClick={() => handleFilterClick('all')}>
+                      All
+                    </div>
+                    <div className="active" onClick={() => handleFilterClick('active')}>
+                      Active
+                    </div>
+                    <div className="completed" onClick={() => handleFilterClick('completed')}>
+                      Completed
+                    </div>
                   </div>
                   <div className="clear-completed" onClick={() => clearCompleted()}>Clear Completed</div>
                 </div>
