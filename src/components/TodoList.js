@@ -154,7 +154,7 @@ const TodoList = () => {
                               <div className={task.active === 0 ? "icon-check-inactive" : "icon-check-active"} onClick={() => setCheckStatus(task.id)}>
                                 <img className="icon-check" src={iconCheck} alt="" />
                               </div>
-                              <p className="task">{task.task}</p>
+                              <p className={`task ${task.active === 1 ? 'task-crossed-out' : ''}`}>{task.task}</p>
                           </div>
                           <img className="icon-cross" src={iconCross} alt="" onClick={() => deleteTask(task.id)}/>
                         </div>

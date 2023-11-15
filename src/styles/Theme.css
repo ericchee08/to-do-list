@@ -62,3 +62,13 @@
 #light .footer {
     color: hsl(234, 11%, 52%);
 }
+
+#light .task-crossed-out {
+    text-decoration: line-through;
+    color: hsl(234, 11%, 52%);
+  }
+
+#dark .task-crossed-out {
+    text-decoration: line-through;
+    color: hsl(235, 19%, 35%)
+  }
