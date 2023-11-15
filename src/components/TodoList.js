@@ -17,7 +17,9 @@ const TodoList = () => {
   useEffect(()=> {
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks();
-      setTasks(tasksFromServer)
+      const sortedTasks = tasksFromServer.sort((a, b) => a.order - b.order);
+
+      setTasks(sortedTasks)
     }
     getTasks();
   },[])
@@ -43,7 +45,6 @@ const TodoList = () => {
   const fetchTasks = async () => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/GetAll`);
     const data = await res.json();
-    // console.log(data)
     return data;
   };
 
@@ -59,7 +60,8 @@ const TodoList = () => {
     });
 
     const tasksFromServer = await fetchTasks();
-    setTasks(tasksFromServer);
+    const sortedTasks = tasksFromServer.sort((a, b) => a.order - b.order);
+    setTasks(sortedTasks);
   };
 
   const clearCompleted = async () => {
@@ -67,7 +69,8 @@ const TodoList = () => {
     method: 'DELETE'
   });
     const tasksFromServer = await fetchTasks();
-    setTasks(tasksFromServer);
+    const sortedTasks = tasksFromServer.sort((a, b) => a.order - b.order);
+    setTasks(sortedTasks);
   }
 
   const addTask = async (newTask) => {
@@ -92,13 +95,26 @@ const TodoList = () => {
       body: JSON.stringify(updateTask),
     });
     const tasksFromServer = await fetchTasks();
-    setTasks(tasksFromServer);
+    const sortedTasks = tasksFromServer.sort((a, b) => a.order - b.order);
+    setTasks(sortedTasks);
+  }
+
+  const updatePosition = async (updateTask) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/Task/UpdatePositions`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updateTask),
+    });
+    const tasksFromServer = await fetchTasks();
+    const sortedTasks = tasksFromServer.sort((a, b) => a.order - b.order);
+    setTasks(sortedTasks);
   }
   
   const setCheckStatus = async (taskId) => {
     const taskToCheckStatus = await fetchTask(taskId);
-    const status = taskToCheckStatus.active === 0 ? 1 : 0;
-
+    const status = taskToCheckStatus.active === 0 ? 1 : 0
     const updTask = { ...taskToCheckStatus, active: status };
     updateTask(updTask)
   }
@@ -118,14 +134,19 @@ const TodoList = () => {
     addTask(newTaskObject);
     setNewTask(''); 
   };
-
+  
   function handleOnDragEnd(result) {
     if (!result.destination) return;
     const items = Array.from(tasks);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setTasks(items);
-    console.log(items)
+
+    const updatedTasks = items.map((task, index) => ({
+      ...task,
+      order: index + 1, 
+    }));
+    updatePosition(updatedTasks)
   }
 
   function numberOfItemsLeft(tasks) {
