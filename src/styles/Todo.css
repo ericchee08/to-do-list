@@ -94,3 +94,9 @@ form {
     border-radius: 0 0 0.3rem 0.3rem;
 }
 
+.footer {
+    text-align: center;
+    margin: 3rem;
+    color: hsl(235, 19%, 35%)
+}
+

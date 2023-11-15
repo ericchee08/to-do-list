@@ -178,6 +178,7 @@ const TodoList = () => {
                   </div>
                   <div className="clear-completed" onClick={() => clearCompleted()}>Clear Completed</div>
                 </div>
+                <div className="footer">Drag and drop to reorder list</div>
             </div>
           )}
         </Droppable>

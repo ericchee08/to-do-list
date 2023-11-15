@@ -54,3 +54,11 @@
 #dark .clear-completed:hover     {
     color: hsl(236, 33%, 92%)
 }
+
+#dark .footer {
+    color: hsl(235, 19%, 35%)
+}
+
+#light .footer {
+    color: hsl(234, 11%, 52%);
+}
