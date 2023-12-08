@@ -17,7 +17,7 @@ const TodoList = () => {
   useEffect(()=> {
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks();
-      const sortedTasks = tasksFromServer.sort((a, b) => a.order - b.order);
+      const sortedTasks = tasksFromServer.sort((a, b) => a.order_item - b.order_item);
 
       setTasks(sortedTasks)
     }
@@ -30,9 +30,9 @@ const TodoList = () => {
 
   const filteredTasks = tasks.filter((task) => {
     if (filter === 'active') {
-      return task.active === 0;
+      return task.active_item === 0;
     } else if (filter === 'completed') {
-      return task.active === 1;
+      return task.active_item === 1;
     } else {
       return true;
     }
@@ -43,24 +43,25 @@ const TodoList = () => {
   };
 
   const fetchTasks = async () => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/GetAll`);
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/`);
     const data = await res.json();
-    return data;
+    const todos = data.todos
+    return todos;
   };
 
   const fetchTask = async (taskId) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/Task/GetSingle?taskId=${taskId}`)
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/todo/${taskId}`)
     const data = await res.json();
     return data;
   }
 
   const deleteTask = async (taskId) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/Task/${taskId}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/todo/${taskId}`, {
       method: 'DELETE'
     });
 
     const tasksFromServer = await fetchTasks();
-    const sortedTasks = tasksFromServer.sort((a, b) => a.order - b.order);
+    const sortedTasks = tasksFromServer.sort((a, b) => a.order_item - b.order_item);
     setTasks(sortedTasks);
   };
 
@@ -69,12 +70,12 @@ const TodoList = () => {
     method: 'DELETE'
   });
     const tasksFromServer = await fetchTasks();
-    const sortedTasks = tasksFromServer.sort((a, b) => a.order - b.order);
+    const sortedTasks = tasksFromServer.sort((a, b) => a.order_item - b.order_item);
     setTasks(sortedTasks);
   }
 
   const addTask = async (newTask) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/Task`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/todo`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -86,8 +87,8 @@ const TodoList = () => {
     setTasks(tasksFromServer);
   };
 
-  const updateTask = async (updateTask) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/Task`, {
+  const updateStatus = async (updateTask) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/todo/updateStatus`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -95,12 +96,12 @@ const TodoList = () => {
       body: JSON.stringify(updateTask),
     });
     const tasksFromServer = await fetchTasks();
-    const sortedTasks = tasksFromServer.sort((a, b) => a.order - b.order);
+    const sortedTasks = tasksFromServer.sort((a, b) => a.order_item - b.order_item);
     setTasks(sortedTasks);
   }
 
   const updatePosition = async (updateTask) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/Task/UpdatePositions`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/todo/updatePosition`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -108,15 +109,16 @@ const TodoList = () => {
       body: JSON.stringify(updateTask),
     });
     const tasksFromServer = await fetchTasks();
-    const sortedTasks = tasksFromServer.sort((a, b) => a.order - b.order);
+    const sortedTasks = tasksFromServer.sort((a, b) => a.order_item - b.order_item);
     setTasks(sortedTasks);
   }
   
   const setCheckStatus = async (taskId) => {
     const taskToCheckStatus = await fetchTask(taskId);
-    const status = taskToCheckStatus.active === 0 ? 1 : 0
-    const updTask = { ...taskToCheckStatus, active: status };
-    updateTask(updTask)
+    const status = taskToCheckStatus.active_item === 0 ? 1 : 0
+    const updTask = { ...taskToCheckStatus, active_item: status };
+    console.log(updTask)
+    updateStatus(updTask)
   }
 
   //records the input change value 
@@ -130,7 +132,7 @@ const TodoList = () => {
     if (newTask.trim() === '') {
       return; 
     }
-    const newTaskObject = { task: newTask, active: 0 };
+    const newTaskObject = { todo_item: newTask, active_item: 0 };
     addTask(newTaskObject);
     setNewTask(''); 
   };
@@ -144,13 +146,13 @@ const TodoList = () => {
 
     const updatedTasks = items.map((task, index) => ({
       ...task,
-      order: index + 1, 
+      order_item: index + 1, 
     }));
     updatePosition(updatedTasks)
   }
 
   function numberOfItemsLeft(tasks) {
-    const inactiveTasks = tasks.filter(task => task.active === 0);
+    const inactiveTasks = tasks.filter(task => task.active_item === 0);
     const numberOfInactiveTasks = inactiveTasks.length;
     return numberOfInactiveTasks
   }
@@ -168,14 +170,14 @@ const TodoList = () => {
             <div {...provided.droppableProps} ref={provided.innerRef} >
               {filteredTasks.map((task, index) => {
                 return ( 
-                  <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                  <Draggable key={task.id} draggableId={task.id} index={index}>
                     {(provided) => (
                         <div className={`tasks-container ${index === 0 ? 'first-task' : ''}`} key={task.id} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                           <div className='task-and-check-container'>
-                              <div className={task.active === 0 ? "icon-check-inactive" : "icon-check-active"} onClick={() => setCheckStatus(task.id)}>
+                              <div className={task.active_item === 0 ? "icon-check-inactive" : "icon-check-active"} onClick={() => setCheckStatus(task.id)}>
                                 <img className="icon-check" src={iconCheck} alt="" />
                               </div>
-                              <p className={`task ${task.active === 1 ? 'task-crossed-out' : ''}`}>{task.task}</p>
+                              <p className={`task ${task.active_item === 1 ? 'task-crossed-out' : ''}`}>{task.todo_item}</p>
                           </div>
                           <img className="icon-cross" src={iconCross} alt="" onClick={() => deleteTask(task.id)}/>
                         </div>
