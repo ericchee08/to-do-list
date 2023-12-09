@@ -114,7 +114,9 @@ const TodoList = () => {
       headers: {
         "x-api-key": apiKey,
         "Content-type": "application/json",
-        'Access-Control-Allow-Origin': 'https://ec-todolist.netlify.app/',
+        "access-control-allow-origin": "*",
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': '*',
       },
       body: JSON.stringify(newTaskObject),
     });
@@ -133,6 +135,7 @@ const TodoList = () => {
       headers: {
         "x-api-key": apiKey,
         "Content-type": "application/json",
+        
       },
       body: JSON.stringify(updateTask),
     });
