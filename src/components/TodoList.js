@@ -49,6 +49,7 @@ const TodoList = () => {
       headers: {
         "x-api-key": apiKey,
         "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': 'https://ec-todolist.netlify.app/'
       },
     });
   
