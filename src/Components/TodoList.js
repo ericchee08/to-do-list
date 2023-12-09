@@ -114,9 +114,6 @@ const TodoList = () => {
       headers: {
         "x-api-key": apiKey,
         "Content-type": "application/json",
-        "access-control-allow-origin": "*",
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': '*',
       },
       body: JSON.stringify(newTaskObject),
     });
