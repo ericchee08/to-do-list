@@ -8,4 +8,31 @@
         max-width: 85%;
         margin-top: 2.8rem;
     }
+
+    .task-footer-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .number-of-items,
+    .clear-completed,
+    .task-status {
+        margin: 0.5rem; /* Adjust margin as needed */
+    }
+    
+    #dark .task-footer-container {
+        background-color: none;
+        color: hsl(234, 11%, 52%);
+        height: 8rem;
+        margin-top: 1.2rem;
+        border-radius: 10rem;
+    }
+
+    #light .task-footer-container {
+        background-color: none;
+        color: hsl(234, 11%, 52%);
+        height: 8rem;
+        margin-top: 1.2rem;
+        border-radius: 10rem;
+    }
 }

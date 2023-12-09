@@ -11,8 +11,8 @@ const TodoList = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState(''); 
   const [filter, setFilter] = useState(localStorage.getItem('todoFilter') || 'all');
-
   const {theme} = useContext(ThemeContext);
+
 
   useEffect(()=> {
     const getTasks = async () => {
@@ -43,21 +43,42 @@ const TodoList = () => {
   };
 
   const fetchTasks = async () => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/`);
+    const apiKey = `${process.env.REACT_APP_API_KEY}`; 
+    
+    const res = await fetch(`${process.env.REACT_APP_API_URL}`, {
+      headers: {
+        "x-api-key": apiKey,
+        "Content-Type": "application/json",
+      },
+    });
+  
     const data = await res.json();
-    const todos = data.todos
+    const todos = data.todos;
     return todos;
   };
 
   const fetchTask = async (taskId) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/todo/${taskId}`)
+    const apiKey = `${process.env.REACT_APP_API_KEY}`; 
+
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/todo/${taskId}`, {
+      headers: {
+        "x-api-key": apiKey,
+        "Content-Type": "application/json",
+      },
+    });
     const data = await res.json();
     return data;
   }
 
   const deleteTask = async (taskId) => {
+    const apiKey = `${process.env.REACT_APP_API_KEY}`; 
+
     await fetch(`${process.env.REACT_APP_API_URL}/todo/${taskId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        "x-api-key": apiKey,
+        "Content-Type": "application/json",
+      },
     });
 
     const tasksFromServer = await fetchTasks();
@@ -66,8 +87,14 @@ const TodoList = () => {
   };
 
   const clearCompleted = async () => {
-    await fetch(`${process.env.REACT_APP_API_URL}/Task/ClearCompleted`,{
-    method: 'DELETE'
+    const apiKey = `${process.env.REACT_APP_API_KEY}`; 
+
+    await fetch(`${process.env.REACT_APP_API_URL}/todos/deleteActiveItems`,{
+      method: 'DELETE',
+      headers: {
+        "x-api-key": apiKey,
+        "Content-Type": "application/json",
+      },
   });
     const tasksFromServer = await fetchTasks();
     const sortedTasks = tasksFromServer.sort((a, b) => a.order_item - b.order_item);
@@ -75,22 +102,35 @@ const TodoList = () => {
   }
 
   const addTask = async (newTask) => {
+    const tasksFromServer = await fetchTasks();
+    const minOrderItem = Math.min(...tasksFromServer.map(task => task.order_item), 0);
+    const order_item = minOrderItem -1;
+    const newTaskObject = { ...newTask, order_item };
+
+    const apiKey = `${process.env.REACT_APP_API_KEY}`; 
+  
     await fetch(`${process.env.REACT_APP_API_URL}/todo`, {
       method: "POST",
       headers: {
+        "x-api-key": apiKey,
         "Content-type": "application/json",
       },
-      body: JSON.stringify(newTask),
+      body: JSON.stringify(newTaskObject),
     });
-
-    const tasksFromServer = await fetchTasks();
-    setTasks(tasksFromServer);
+  
+    const updatedTasks = await fetchTasks();
+  
+    const sortedTasks = updatedTasks.sort((a, b) => a.order_item - b.order_item);
+    setTasks(sortedTasks);
   };
 
   const updateStatus = async (updateTask) => {
+    const apiKey = `${process.env.REACT_APP_API_KEY}`; 
+
     await fetch(`${process.env.REACT_APP_API_URL}/todo/updateStatus`, {
       method: "PUT",
       headers: {
+        "x-api-key": apiKey,
         "Content-type": "application/json",
       },
       body: JSON.stringify(updateTask),
@@ -101,9 +141,12 @@ const TodoList = () => {
   }
 
   const updatePosition = async (updateTask) => {
+    const apiKey = `${process.env.REACT_APP_API_KEY}`; 
+
     await fetch(`${process.env.REACT_APP_API_URL}/todo/updatePosition`, {
       method: "PUT",
       headers: {
+        "x-api-key": apiKey,
         "Content-type": "application/json",
       },
       body: JSON.stringify(updateTask),
